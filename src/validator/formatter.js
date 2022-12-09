@@ -2,7 +2,8 @@
 //- changetoLowerCase() : changes the case of the string to lower. [Call toLowerCase() on a hardcoded string]
 //- changeToUpperCase() : changes the case of the string to upper case [Call toUpperCase() on a hardcoded string]
 
-
+let text = ' functionUp  ';
+let result = text.trim();
 
 const lc=("KSNCNCKCN");
 const lc2=(lc.toLowerCase())
@@ -13,3 +14,4 @@ const Up2=(Up.toUpperCase())
 //console.log(lc2)
 module.exports.up = lc2
 module.exports.lc =Up2
+module.exports.result=result
