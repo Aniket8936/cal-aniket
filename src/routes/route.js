@@ -38,9 +38,6 @@ router.get('/test-me', function (req, res) {
     const withoutduplicate=_.union(arr1,arr2)
     console.log(withoutduplicate)
 
-    //let pairarr=[["horror","The Shining"],["drama","Titanic"],["thriller","Shutter Island"],["fantasy","Pans Labyrinth"]];
-    //let obj = _.fromPairs(pairarr);
-   // console.log(obj)
     console.log("email from introduction module", intro.myEmail)
     intro.myFunction('Sabiha')
     console.log("email from employee module", employee.myEmail)
@@ -58,10 +55,78 @@ router.get('/test-you', function(req, res){
     console.log("I am here")
     res.send("very important text")
 })
-
+  /*Assignment 1 Call.............................................................................*/
 router.get('/movies', function(req, res){
-    const arr=["Rang de basanti", "The shining", "Lord of the rings", "Batman begins"]
+    const movies=["Rang de basanti", "The shining", "Lord of the rings", "Batman begins"]
+     console.log(movies)
+     res.send("code pass")
+})
+    /*Assignment 2 Call.............................................................................*/
+router.get('/movies/:indexNumber',function(req, res){
+    const movies=["Rang de basanti", "The shining", "Lord of the rings", "Batman begins"]
+    const i=req.params.indexNumber
+    console.log(movies[i])
+
+    /*Assignment 3 Call.............................................................................*/
+         if(i>0 && i<movies.length){
+            console.log(true)
+         }else{
+            console.log("error message")
+         }
+    res.send("code pass")
+})
+
+     /*Assignment 4 Call.............................................................................*/
+router.get('/film', function(req, res){
+   const details = [ {
+        "id": 1,
+        "name": "The Shining"
+       }, {
+        "id": 2,
+        "name": "Incendies"
+       }, {
+        "id": 3,
+        "name": "Rang de Basanti"
+       }, {
+        "id": 4,
+        "name": "Finding Nemo"
+       }]
+
+       console.log(details)
+       res.send("code pass")
+       
+})
     
+    /*Assignment 5 Call.............................................................................*/
+router.get('/film/:filmId',function(req,res){
+    //const Island=req.params.filmId
+    const details = [
+       {
+        "id": 1,
+        "name": "The Shining"
+       }, 
+       {
+        "id": 2,
+        "name": "Incendies"
+       }, 
+       {
+        "id": 3,
+        "name": "Rang de Basanti"
+       },
+       {
+        "id": 4,
+        "name": "Finding Nemo"
+       }
+    ]
+
+    const index=req.params.filmId
+        let film=details.find((name)=>name.id==index)
+         if(film){
+           console.log(film)
+         }else{
+           console.log("No movie exists with this id")
+         }
+         res.send("code pass")
 })
 
 
