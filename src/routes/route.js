@@ -100,16 +100,16 @@ router.post("/test-post-4", function(req, res) {
        },
    ]
    router.post("/player",function(req, res){
-   let bodyname=req.body.name
-//    let play=players.find((xyz)=>xyz===bodyname)
-//    if(play){
-//     res.send({ msg: players , status: true } )
-//    }else{
-//     players.push(req.body)
-//     res.send({ msg: players , status: true })
-//    }
-   players.push(req.body)
-   res.send(  { msg: players , status: true }  )
+    let bodyname=req.body.name
+   let play=players.find((xyz)=>xyz.name===bodyname)
+   if(play){
+    res.send({ msg: players , status: true } )
+   }else{
+    players.push(req.body)
+    res.json({ msg: players , status: true })
+   }
+//    players.push(req.body)
+//    res.send(  { msg: players , status: true }  )
  
 
 })
