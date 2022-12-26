@@ -4,6 +4,9 @@ const router = express.Router();
 const UserController= require("../controllers/userController")
 const BookController= require("../controllers/bookController")
 const commonMW = require ("../middlewares/commonMiddlewares")
+const productcontroller=require("../controllers/productcontroller")
+const userdocumentcontroller=require("../controllers/userdcumentcontroller")
+const handlerrmiddleware=require("../middlewares/handlerrmiddlerware")
 
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
@@ -11,5 +14,7 @@ router.get("/test-me", function (req, res) {
 
 router.post("/createBook", commonMW.abc, BookController.createBook  )
 router.post("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.abc, UserController.basicCode, commonMW.mid4)
+router.post("/createproduct",productcontroller.createproduct)
+router.post("/createuser",handlerrmiddleware.headervalidation,userdocumentcontroller.createuser)
 
 module.exports = router;
