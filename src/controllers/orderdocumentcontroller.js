@@ -1,43 +1,58 @@
-const { isValidObjectId } = require("mongoose")
-const orderdocumen=require("../models/orderdocument")
-const productdocument = require("../models/productdocument")
+const orderdocument = require("../models/orderdocument")
 const userdocument = require("../models/userdocument")
+const productdocument = require("../models/productdocument")
 
-const createorder=async function(req,res){
-  const {userId,productId}=req.body
+const createOrder= async function (req, res) {
+    // TODO:  1) Header validation. return error if abset
+    let appHeader = req.headers["isFreeAppUser"]
+    if(!appHeader) appHeader = req.headers["isfreeappuser"]
 
-  //go for a headermiddleware and check isfree is available
-  const isFreeAppUser=req.headers.isFreeAppUser  //string
-  isFreeAppUser=isFreeAppUser.toLowerCase()===true?true:false //boolean 
+    if(!appHeader) return res.send({status: false, message:"The mandatory header is not present"})
 
-  if(!productId||!userId){
-    return res.send("productId and userId is mandatory")
-  }
+    console.log("request header is", appHeader)
+    
+    let data= req.body
 
-   if(!isValidObjectId(productId)){
-    return res.send("productId ia invalid")
-   }
+    if(appHeader == 'true') {
+        data.isFreeAppUser = true
+    } else {
+        data.isFreeAppUser = false
+    }
 
-   if(!isValidObjectId(userId)){
-    return res.send("userId is invalid")
-   }
+    // TODO: 2) User validation
+    let user = await userdocument.findById(data.userId)
+    if(!user) return res.send({status : false, message: "User not found"})
 
-   const userdetail=await userdocument.findById(userId)
+    // TODO: 3) Product validation
+    let product = await productdocument.findById(data.productId)
+    if(!product) return res.send({status: false, message: "Product not found"})
 
-   if(!userdetail){
-    return res.send("user is not found")
-   }
+    // TODO: 4) If free app, then dont deduct users balances and set amount to 0
+    if(appHeader == 'true') {
+        data.amount = 0
+        let savedData= await orderdocument.create(data)
+        return res.send({status: true, data: savedData})
+    }
 
-   const productdetail=await productdocument.findById(productId)
+    // TODO: 5) If paid app, then check user's balance. if not enough dont create the order and return an error
+    if(appHeader != 'true') {
+        if(user.balance < product.price) {
+            return res.send({staus: false, message: "user doesn't jave enough balance"})
+        } else {
+            // TODO: 6) If paid app, then check user's balance. If enough then create and order
+            data.amount = product.price
+            let savedData= await orderModel.create(data)
+            await userModel.findOneAndUpdate({_id:data.userId}, {balance:user.balance - product.price})
+            return res.send({status: true, data: savedData})
+        }
+    }
 
-   if(!productdetail){
-    return res.send("product is not founf")
-   }
-   
-   
+    
 
 
-
+    
 
 
 }
+
+module.exports.createOrder = createOrder
