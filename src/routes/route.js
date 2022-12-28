@@ -16,8 +16,8 @@ router.get("/test-me", function (req, res) {
 router.post("/createBook", commonMW.abc, BookController.createBook  )
 router.post("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.abc, UserController.basicCode, commonMW.mid4)
 router.post("/createproduct",productcontroller.createproduct)
-router.post("/createUser",userdocumentcontroller.createUser)
-router.post("/createOrder",orderdocumentcontroller.createOrder)
+router.post("/createUser",handlerrmiddleware.headervalidation,userdocumentcontroller.createUser)
+router.post("/createOrder",handlerrmiddleware.headervalidation,orderdocumentcontroller.createOrder)
 
 
 

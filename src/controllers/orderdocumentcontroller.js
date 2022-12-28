@@ -4,20 +4,20 @@ const productdocument = require("../models/productdocument")
 
 const createOrder= async function (req, res) {
     // TODO:  1) Header validation. return error if abset
-    let appHeader = req.headers["isFreeAppUser"]
-    if(!appHeader) appHeader = req.headers["isfreeappuser"]
+    // let appHeader = req.headers["isFreeAppUser"]
+    // if(!appHeader) appHeader = req.headers["isfreeappuser"]
 
-    if(!appHeader) return res.send({status: false, message:"The mandatory header is not present"})
+    // if(!appHeader) return res.send({status: false, message:"The mandatory header is not present"})
 
-    console.log("request header is", appHeader)
+  //  console.log("request header is", appHeader)
     
-    let data= req.body
+    // let data= req.body
 
-    if(appHeader == 'true') {
-        data.isFreeAppUser = true
-    } else {
-        data.isFreeAppUser = false
-    }
+    // if(appHeader == 'true') {
+    //     data.isFreeAppUser = true
+    // } else {
+    //     data.isFreeAppUser = false
+    // }
 
     // TODO: 2) User validation
     let user = await userdocument.findById(data.userId)
