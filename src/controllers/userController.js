@@ -87,12 +87,12 @@ const postMessage = async function (req, res) {
    // go to middleware authorise part
     
     //userId for which the request is made. In this case message to be posted.
-    let userToBeModified = req.params.userId
-    //userId for the logged-in user
-    let userLoggedIn = decodedToken.userId
+    // let userToBeModified = req.params.userId
+    // //userId for the logged-in user
+    // let userLoggedIn = decodedToken.userId
 
-    //userId comparision to check if the logged-in user is requesting for their own data
-    if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
+    // //userId comparision to check if the logged-in user is requesting for their own data
+    // if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
 
     let user = await userModel.findById(req.params.userId)
     if(!user) return res.send({status: false, msg: 'No such user exists'})
